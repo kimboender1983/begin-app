@@ -1,46 +1,55 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld :message="message"/>
-  </div>
+  <q-layout view="lHh Lpr lFf">
+    <q-header>
+      <q-toolbar>
+        <q-btn flat dense @click="leftDrawerOpen = !leftDrawerOpen" aria-label="Menu" icon="menu" />
+
+        <q-toolbar-title>Collaboration platform</q-toolbar-title>
+      </q-toolbar>
+    </q-header>
+
+    <q-drawer v-model="leftDrawerOpen" show-if-above bordered content-class="bg-grey-2">
+      <q-list>
+        <q-item clickable to="/">
+          <q-item-section avatar>
+            <q-icon name="dashboard" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Dashboard</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item clickable to="/users">
+          <q-item-section avatar>
+            <q-icon name="people" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Users</q-item-label>
+          </q-item-section>
+        </q-item>
+      </q-list>
+    </q-drawer>
+
+    <q-page-container>
+      <div class="q-pa-lg">
+        <router-view></router-view>
+      </div>
+    </q-page-container>
+  </q-layout>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'app',
-  data: function () {
+  name: "LayoutDefault",
+
+  components: {},
+
+  data() {
     return {
-      message: 'Loading...'
-    }
+      leftDrawerOpen: false,
+    };
   },
-  components: {
-    HelloWorld
-  },
-  methods:  {
-    getData: async function () {
-      try {
-        let data = await (await fetch('api')).json()
-        this.message = data.message
-      } catch (err) {
-        this.message = err.message
-      }
-    }
-  },
-  mounted: function () {
-    this.getData()
-  }
-}
+};
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
